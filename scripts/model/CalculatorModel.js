@@ -1,14 +1,19 @@
 class CalculatorModel {
-
+    constructor(){
+        this._displayCalcEl =  document.querySelector("#display");
+        this._dateEl = document.querySelector("#data");
+        this._timeEl = document.querySelector("#hora");
+        this._currentDate;
+    }
     get displayTime(){
         return this._timeEl.innerHTML;
-    }
-    get displayDate(){
-        return this._dateEl.innerHTML;
     }
     set displayTime(value){
         this._timeEl.innerHTML = value;
     }
+    get displayDate(){
+        return this._dateEl.innerHTML;
+    }    
     set displayDate(value){
         this._dateEl.innerHTML = value;
     }

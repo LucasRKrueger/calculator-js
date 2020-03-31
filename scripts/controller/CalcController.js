@@ -30,8 +30,8 @@ class CalcControler{
     }   
 
     setDisplayDateTime() {        
-        this.displayDate = this.calcModel.currentDate.toLocaleDateString(this._locale);
-        this.displayTime = this.calcModel.currentDate.toLocaleTimeString(this._locale);
+        this.calcModel.displayDate = this.calcModel.currentDate.toLocaleDateString(this._locale);
+        this.calcModel.displayTime = this.calcModel.currentDate.toLocaleTimeString(this._locale);
     }
 
     addEventListenerAll(element, events, fn){
@@ -73,7 +73,7 @@ class CalcControler{
     }
 
     clearAll(){
-
+        this._operation = [];
     }
 
     clearEntry(){
