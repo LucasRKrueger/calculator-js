@@ -1,44 +1,10 @@
 class CalcControler{
     constructor(){
+        this._operation = [];
         this._locale = 'pt-BR';
-        this._displayCalcEl =  document.querySelector("#display");
-        this._dateEl = document.querySelector("#data");
-        this._timeEl = document.querySelector("#hora");
-        this._currentDate;
+        this.calcModel = new CalculatorModel;
         this.initialize();
         this.initButtonsEvents();
-    }     
-
-    get displayTime(){
-        return this._timeEl.innerHTML;
-    }
-
-    get displayDate(){
-        return this._dateEl.innerHTML;
-    }
-
-    set displayTime(value){
-        this._timeEl.innerHTML = value;
-    }
-
-    set displayDate(value){
-        this._dateEl.innerHTML = value;
-    }
-
-    get displayCalc(){
-        return this._displayCalcEl.innerHTML;
-    }
-
-    set displayCalc(value){
-        this.displayCalcEl.innerHTML = value;
-    }
-
-    get currentDate(){
-        return new Date();        
-    }
-    
-    set currentDate(value){
-        this._currentDate = value;
     }
 
     initialize(){
@@ -46,13 +12,14 @@ class CalcControler{
         setInterval(() => {
             this.setDisplayDateTime();
         },1000);
-    }
-    
+    }    
+
     initButtonsEvents(){
         let buttons = document.querySelectorAll("#buttons > g, #parts > g");
         buttons.forEach((btn, index) =>{        
             this.addEventListenerAll(btn, 'click drag', e=>{
-                console.log(btn.className.baseVal.replace("btn-", ""));
+                let textBtn = console.log(btn.className.baseVal.replace("btn-", ""));
+                this.execBtn(textBtn);
             });
         
 
@@ -62,14 +29,58 @@ class CalcControler{
         })
     }   
 
-    setDisplayDateTime() {
-        this.displayDate = this.currentDate.toLocaleDateString(this._locale);
-        this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
+    setDisplayDateTime() {        
+        this.displayDate = this.calcModel.currentDate.toLocaleDateString(this._locale);
+        this.displayTime = this.calcModel.currentDate.toLocaleTimeString(this._locale);
     }
 
     addEventListenerAll(element, events, fn){
         events.split(' ').forEach(event => {
             element.addEventListener(event, fn, false);
         })
+    }
+
+    execBtn(btnValue){
+        switch(btnValue){
+            case 'ac':
+                this.clearAll();
+                break;
+            case 'ce':
+                this.clearEntry();
+            case 'soma':
+
+                break;
+            case 'subtracao':
+
+                break;
+            case 'divisao':
+
+                break;
+            case 'porcento':
+
+                break;
+            case 'igual':
+
+                break;
+            default:
+                this.setError();
+                break;            
+        }
+    }
+
+    addOperation(value){
+        this._operation.push(value);
+    }
+
+    clearAll(){
+
+    }
+
+    clearEntry(){
+        
+    }
+
+    setError(){
+        console.log('Erro no switch dos valores');
     }
 }
