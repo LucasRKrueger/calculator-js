@@ -95,19 +95,44 @@ class CalcControler{
             } else if(isNaN(btnValue)){                
             }
             else{
-                this._operation.push(value);
+                pushOperation(value)
             }
         } else{
-            let newValue = this.getLastOperation().toString() + btnValue.toString();
-            this.setLastOperation(parseInt(newValue));
+            if(this.isOperator(value)){
+                pushOperation(value);
+            }
+            else{
+                let newValue = this.getLastOperation().toString() + btnValue.toString();
+                this.setLastOperation(parseInt(newValue));
+
+                setLastNumberToDisplay();
+            }
         }
     }
     
+    pushOperation(value){
+        this._operation.push(value);
+        if(this._operation.lenght > 3){
+            calc()
+        }
+    }
+
     getLastOperation(){
         return this._operation[this._operation.length-1];
     }
     setLastOperation(btnValue){
         this._operation[this._operation.length-1] = btnValue;
+    }
+
+    calc(){
+        let last = this._operation.pop();
+        let result = eval(this._operation.join(""));
+
+        this._operation = [result, last];
+    }
+    
+    setLastNumberToDisplay(){
+
     }
 
     isOperator(btnValue){
