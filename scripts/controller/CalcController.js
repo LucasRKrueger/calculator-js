@@ -18,7 +18,7 @@ class CalcControler{
         let buttons = document.querySelectorAll("#buttons > g, #parts > g");
         buttons.forEach((btn, index) =>{        
             this.addEventListenerAll(btn, 'click drag', e=>{
-                let textBtn = btn.className.baseVal.replace("btn-", "");
+                let textBtn = console.log(btn.className.baseVal.replace("btn-", ""));
                 this.execBtn(textBtn);
             });
         
@@ -78,7 +78,7 @@ class CalcControler{
             case '7':
             case '8':
             case '9':
-                this.addOperation(parseInt(btnValue))
+                addOperation(parseInt(btnValue))
                 break;
                 
             default:
@@ -90,34 +90,30 @@ class CalcControler{
     addOperation(value){
 
         if(isNaN(this.getLastOperation())){
-
-            if(this.isOperator(value)){
-                this.setLastOperation(value);                
-
-            } else if(isNaN(value)){                
-                console.log('')
+            if(this.isOperator(btnValue)){
+                this.setLastOperation(btnValue);                
+            } else if(isNaN(btnValue)){                
             }
             else{
-                this.pushOperation(value)
-                this.setLastNumberToDisplay();
+                pushOperation(value)
             }
         } else{
             if(this.isOperator(value)){
-                this.pushOperation(value);
+                pushOperation(value);
             }
             else{
-                let newValue = this.getLastOperation().toString() + value.toString();
+                let newValue = this.getLastOperation().toString() + btnValue.toString();
                 this.setLastOperation(parseInt(newValue));
 
-                this.setLastNumberToDisplay();
+                setLastNumberToDisplay();
             }
         }
     }
     
     pushOperation(value){
         this._operation.push(value);
-        if(this._operation.length > 3){
-            this.calc()
+        if(this._operation.lenght > 3){
+            calc()
         }
     }
 
@@ -137,6 +133,7 @@ class CalcControler{
     }
     
     setLastNumberToDisplay(){
+
        let lastNumber;
        
        for(let i = this._operation.length-1; i >= 0; i--){
