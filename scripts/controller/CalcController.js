@@ -147,10 +147,10 @@ class CalcControler{
 
         if(this._operation.length > 3){
             last = this._operation.pop();
-            this._lastNumber = this.getResult();
+            this._lastNumber = this.getLastItem();
         }
         else if(this._operation.length == 3){
-            this._lastNumber = this.getResult(false);
+            this._lastNumber = this.getLastItem(false);
         }
 
         let result = this.getResult();
