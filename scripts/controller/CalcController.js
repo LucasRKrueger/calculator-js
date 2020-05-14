@@ -2,6 +2,8 @@ class CalcControler{
     constructor(){
         this._operation = [];
         this._locale = 'pt-BR';
+        this._lastOperator = '';
+        this._lastNumber = '';
         this.calcModel = new CalculatorModel;
         this.initialize();
         this.initButtonsEvents();
@@ -129,12 +131,30 @@ class CalcControler{
         this._operation[this._operation.length-1] = btnValue;
     }
 
+    getResult(){
+        return eval(this._operation.join(""));
+    }
+
     calc(){
         let last = '';
+
+        this._lastOperator = this.getLastItem();
+
+        if(this._operation.length < 3){
+            let firstItem = this._operation[0];
+            this._operation = [firstItem, this._lastOperator, this._lastNumber];
+        }
+
         if(this._operation.length > 3){
             last = this._operation.pop();
+            this._lastNumber = this.getResult();
         }
-        let result = eval(this._operation.join(""));
+        else if(this._operation.length == 3){
+            this._lastNumber = this.getResult(false);
+        }
+
+        let result = this.getResult();
+
         if(last == '%'){
             result /= 100;
             this._operation = [result];
@@ -149,20 +169,27 @@ class CalcControler{
         this.setLastNumberToDisplay();
     }
     
-    setLastNumberToDisplay(){
-       let lastNumber;
-       
-       for(let i = this._operation.length-1; i >= 0; i--){
-           if (!this.isOperator(this._operation[i])){
-                lastNumber = this._operation[i];
-                break;
-           }
-       }
-       if(!lastNumber){ 
-           lastNumber = 0;
-       }
+    getLastItem(isOperator = true){
+        let lastItem;
 
-       this.calcModel.displayCalc = lastNumber;
+        for(let i = this._operation.length-1; i >= 0; i--){            
+            if (this.isOperator(this._operation[i]) == isOperator){
+                lastItem = this._operation[i];
+                break;
+            }            
+        }
+        if(!lastItem){
+            lastItem = (isOperator) ? this._lastOperator : this._lastNumber;
+        }
+        return lastItem;
+    }
+
+    setLastNumberToDisplay(){
+        let lastNumber = this.getLastItem(false);
+                               
+        if(!lastNumber) lastNumber = 0;        
+
+        this.calcModel.displayCalc = lastNumber;
     }
 
     isOperator(btnValue){
