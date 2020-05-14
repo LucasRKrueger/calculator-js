@@ -7,6 +7,7 @@ class CalcControler{
         this.calcModel = new CalculatorModel;
         this.initialize();
         this.initButtonsEvents();
+        this.initKeyboard();
     }
 
     initialize(){
@@ -15,7 +16,13 @@ class CalcControler{
             this.setDisplayDateTime();
         },1000);
         this.setLastNumberToDisplay();
-    }    
+    }
+    
+    initKeyboard(){
+        document.addEventListener('keyup', e=>{
+            this.execBtn(e.key);
+        });
+    }
 
     initButtonsEvents(){
         let buttons = document.querySelectorAll("#buttons > g, #parts > g");
@@ -45,29 +52,38 @@ class CalcControler{
     execBtn(btnValue){
         switch(btnValue){
             case 'ac':
+            case 'Escape':
                 this.clearAll();
                 break;
+            case 'Backspace':    
             case 'ce':
                 this.clearEntry();
             case 'soma':
+            case '+':
                 this.addOperation('+');
                 break;
+            case '-':
             case 'subtracao':
                 this.addOperation('-');
                 break;
+            case '/':
             case 'divisao':
                 this.addOperation('/');
                 break;
             case 'multiplicacao':
+            case '*':
                 this.addOperation('*');
                 break;
             case 'porcento':
                 this.addOperation('%');
                 break;
             case 'igual':
+            case 'Enter':
                 this.calc();
                 break;
             case 'ponto':
+            case '.':
+            case ',':
                 this.addDot();
                 break;
 
@@ -82,11 +98,7 @@ class CalcControler{
             case '8':
             case '9':
                 this.addOperation(parseInt(btnValue))
-                break;
-                
-            default:
-                this.setError();
-                break;            
+                break;                         
         }
     }
 
