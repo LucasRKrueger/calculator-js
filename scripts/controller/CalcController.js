@@ -23,12 +23,20 @@ class CalcControler{
         input.remove();
     }
 
+    pasteFromClipboard(){
+        document.addEventListener("paste", e=>{
+           let text = e.clipboardData.getData('Text');
+           this.calcModel.displayCalc = parseFloat(text);
+        });
+    }
+
     initialize(){
         this.setDisplayDateTime();
         setInterval(() => {
             this.setDisplayDateTime();
         },1000);
         this.setLastNumberToDisplay();
+        this.pasteFromClipboard();
     }
     
     initKeyboard(){
