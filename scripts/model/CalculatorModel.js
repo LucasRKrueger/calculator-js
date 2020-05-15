@@ -21,7 +21,9 @@ class CalculatorModel {
         return this._displayCalcEl.innerHTML;
     }
     set displayCalc(value){
-        this._displayCalcEl.innerHTML = value;        
+        if(!value.toString().length > 10){        
+            this._displayCalcEl.innerHTML = value;        
+        }
     }
     get currentDate(){
         return new Date();        
