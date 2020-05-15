@@ -10,6 +10,19 @@ class CalcControler{
         this.initKeyboard();
     }
 
+    copyToClipboard(){
+        let input = document.createElement('input');
+        input.value = this.calcModel.displayCalc;
+
+        document.body.appendChild(input);
+
+        input.select();
+
+        document.execCommand("Copy");
+
+        input.remove();
+    }
+
     initialize(){
         this.setDisplayDateTime();
         setInterval(() => {
@@ -20,7 +33,7 @@ class CalcControler{
     
     initKeyboard(){
         document.addEventListener('keyup', e=>{
-            this.execBtn(e.key);
+            this.execBtn(e.key, e.ctrlKey);
         });
     }
 
@@ -49,7 +62,7 @@ class CalcControler{
         })
     }
 
-    execBtn(btnValue){
+    execBtn(btnValue, ctrlBtnEvent = false){
         switch(btnValue){
             case 'ac':
             case 'Escape':
@@ -98,7 +111,13 @@ class CalcControler{
             case '8':
             case '9':
                 this.addOperation(parseInt(btnValue))
-                break;                         
+                break;
+            
+            case 'c':
+                if(ctrlBtnEvent){
+                    this.copyToClipboard();
+                }
+
         }
     }
 
